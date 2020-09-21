@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vue.cn.mapper.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="com.vue.cn.domin.Employee" >
+    <id column="employee_id" property="employeeId" jdbcType="INTEGER" />
+    <result column="employee_name" property="employeeName" jdbcType="VARCHAR" />
+    <result column="employee_img" property="employeeImg" jdbcType="VARCHAR" />
+    <result column="employee_email" property="employeeEmail" jdbcType="VARCHAR" />
+    <result column="employee_phone" property="employeePhone" jdbcType="VARCHAR" />
+    <result column="employee_salary" property="employeeSalary" jdbcType="DOUBLE" />
+    <result column="employee_dept" property="employeeDept" jdbcType="VARCHAR" />
+    <result column="employee_password" property="employeePassword" jdbcType="VARCHAR" />
+    <result column="employee_address" property="employeeAddress" jdbcType="VARCHAR" />
+    <result column="active" property="active" jdbcType="BIT" />
+    <result column="employee_time" property="employeeTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    employee_id, employee_name, employee_img, employee_email, employee_phone, employee_salary, 
+    employee_dept, employee_password, employee_address, active, employee_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.vue.cn.domin.EmployeeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from employee
+    where employee_id = #{employeeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from employee
+    where employee_id = #{employeeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.vue.cn.domin.EmployeeExample" >
+    delete from employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.vue.cn.domin.Employee" >
+    insert into employee (employee_id, employee_name, employee_img, 
+      employee_email, employee_phone, employee_salary, 
+      employee_dept, employee_password, employee_address, 
+      active, employee_time)
+    values (#{employeeId,jdbcType=INTEGER}, #{employeeName,jdbcType=VARCHAR}, #{employeeImg,jdbcType=VARCHAR}, 
+      #{employeeEmail,jdbcType=VARCHAR}, #{employeePhone,jdbcType=VARCHAR}, #{employeeSalary,jdbcType=DOUBLE}, 
+      #{employeeDept,jdbcType=VARCHAR}, #{employeePassword,jdbcType=VARCHAR}, #{employeeAddress,jdbcType=VARCHAR}, 
+      #{active,jdbcType=BIT}, #{employeeTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vue.cn.domin.Employee" >
+    insert into employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="employeeId != null" >
+        employee_id,
+      </if>
+      <if test="employeeName != null" >
+        employee_name,
+      </if>
+      <if test="employeeImg != null" >
+        employee_img,
+      </if>
+      <if test="employeeEmail != null" >
+        employee_email,
+      </if>
+      <if test="employeePhone != null" >
+        employee_phone,
+      </if>
+      <if test="employeeSalary != null" >
+        employee_salary,
+      </if>
+      <if test="employeeDept != null" >
+        employee_dept,
+      </if>
+      <if test="employeePassword != null" >
+        employee_password,
+      </if>
+      <if test="employeeAddress != null" >
+        employee_address,
+      </if>
+      <if test="active != null" >
+        active,
+      </if>
+      <if test="employeeTime != null" >
+        employee_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="employeeName != null" >
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeImg != null" >
+        #{employeeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeEmail != null" >
+        #{employeeEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="employeePhone != null" >
+        #{employeePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeSalary != null" >
+        #{employeeSalary,jdbcType=DOUBLE},
+      </if>
+      <if test="employeeDept != null" >
+        #{employeeDept,jdbcType=VARCHAR},
+      </if>
+      <if test="employeePassword != null" >
+        #{employeePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeAddress != null" >
+        #{employeeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="active != null" >
+        #{active,jdbcType=BIT},
+      </if>
+      <if test="employeeTime != null" >
+        #{employeeTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.vue.cn.domin.EmployeeExample" resultType="java.lang.Integer" >
+    select count(*) from employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update employee
+    <set >
+      <if test="record.employeeId != null" >
+        employee_id = #{record.employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.employeeName != null" >
+        employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeImg != null" >
+        employee_img = #{record.employeeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeEmail != null" >
+        employee_email = #{record.employeeEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeePhone != null" >
+        employee_phone = #{record.employeePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeSalary != null" >
+        employee_salary = #{record.employeeSalary,jdbcType=DOUBLE},
+      </if>
+      <if test="record.employeeDept != null" >
+        employee_dept = #{record.employeeDept,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeePassword != null" >
+        employee_password = #{record.employeePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeAddress != null" >
+        employee_address = #{record.employeeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.active != null" >
+        active = #{record.active,jdbcType=BIT},
+      </if>
+      <if test="record.employeeTime != null" >
+        employee_time = #{record.employeeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update employee
+    set employee_id = #{record.employeeId,jdbcType=INTEGER},
+      employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      employee_img = #{record.employeeImg,jdbcType=VARCHAR},
+      employee_email = #{record.employeeEmail,jdbcType=VARCHAR},
+      employee_phone = #{record.employeePhone,jdbcType=VARCHAR},
+      employee_salary = #{record.employeeSalary,jdbcType=DOUBLE},
+      employee_dept = #{record.employeeDept,jdbcType=VARCHAR},
+      employee_password = #{record.employeePassword,jdbcType=VARCHAR},
+      employee_address = #{record.employeeAddress,jdbcType=VARCHAR},
+      active = #{record.active,jdbcType=BIT},
+      employee_time = #{record.employeeTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vue.cn.domin.Employee" >
+    update employee
+    <set >
+      <if test="employeeName != null" >
+        employee_name = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeImg != null" >
+        employee_img = #{employeeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeEmail != null" >
+        employee_email = #{employeeEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="employeePhone != null" >
+        employee_phone = #{employeePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeSalary != null" >
+        employee_salary = #{employeeSalary,jdbcType=DOUBLE},
+      </if>
+      <if test="employeeDept != null" >
+        employee_dept = #{employeeDept,jdbcType=VARCHAR},
+      </if>
+      <if test="employeePassword != null" >
+        employee_password = #{employeePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeAddress != null" >
+        employee_address = #{employeeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="active != null" >
+        active = #{active,jdbcType=BIT},
+      </if>
+      <if test="employeeTime != null" >
+        employee_time = #{employeeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where employee_id = #{employeeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vue.cn.domin.Employee" >
+    update employee
+    set employee_name = #{employeeName,jdbcType=VARCHAR},
+      employee_img = #{employeeImg,jdbcType=VARCHAR},
+      employee_email = #{employeeEmail,jdbcType=VARCHAR},
+      employee_phone = #{employeePhone,jdbcType=VARCHAR},
+      employee_salary = #{employeeSalary,jdbcType=DOUBLE},
+      employee_dept = #{employeeDept,jdbcType=VARCHAR},
+      employee_password = #{employeePassword,jdbcType=VARCHAR},
+      employee_address = #{employeeAddress,jdbcType=VARCHAR},
+      active = #{active,jdbcType=BIT},
+      employee_time = #{employeeTime,jdbcType=TIMESTAMP}
+    where employee_id = #{employeeId,jdbcType=INTEGER}
+  </update>
+</mapper>

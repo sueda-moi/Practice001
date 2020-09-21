@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="vue-domin" />
+        <module name="vue-mapper" />
+        <module name="vue-service" />
+        <module name="vue-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="vue-domin" target="1.5" />
+      <module name="vue-mapper" target="1.5" />
+      <module name="vue-parent" target="1.5" />
+      <module name="vue-service" target="6" />
+      <module name="vue-web" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

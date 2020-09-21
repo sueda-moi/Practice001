@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Head -->
+<head>
+    <title>注册页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="application/x-javascript">
+        addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <link rel="stylesheet" href="css/loginRegister.css" type="text/css" media="all">
+</head>
+
+<body>
+
+<h1>尚马工具学习系统</h1>
+
+<div class="container" id="app">
+
+    <div class="login">
+        <h2>管理员登录</h2>
+        <div class="form">
+            <!--<form action="#" method="post">-->
+            <input type="text"
+                   placeholder="请输入手机号"
+                   v-model="phone">
+            <button class="sendCode"
+                     @click="sendCode">获取验证码</button>
+            <input type="text" placeholder="密码">
+            <button class="loginBtn">登录</button>
+
+        </div>
+        <a href="login1.html" style="float: right;">学生登录</a>
+    </div>
+</div>
+
+
+
+<script src="js/vue.min.js"></script>
+<script src="js/axios.min.js"></script>
+<script src="js/login.js"></script>
+
+
+</body>
+
+
+</html>
