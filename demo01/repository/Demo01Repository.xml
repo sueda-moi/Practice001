@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product.domain.Demo01.repository.Demo01Repository">
+    <resultMap id="SummaryResultMap" 
+                type="product.domain.Demo01.model.Demo01Q10100trDwgRevSmrTableDto">
+        <id column="DRAWING_NO" jdbcType="VARCHAR" property="drawingNo"/>
+        <id column="REV_NO" jdbcType="VARCHAR" property="revNo"/>
+        <id column="REV_WRITE_PAGE" jdbcType="VARCHAR" property="revWritePage"/>
+        <id column="PAGE_SEQ" jdbcType="VARCHAR" property="pageSeq"/>
+        <result column="REV_CONTENTS_SUMMARY" jdbcType="VARCHAR" property="revContentsSummary"/>
+    </resultMap>
+    <resultMap id="CommonResultMap"
+               type="product.domain.Demo01.model.Demo01TableDto">
+        <result column="DRAWING_NO" jdbcType="VARCHAR" property="drawingNo"/>
+        <result column="REV_NO" jdbcType="VARCHAR" property="revNo"/>
+        <result column="DRAWING_TITLE" jdbcType="VARCHAR" property="drawingTitle"/>
+        <result column="DRAWINGDATE" jdbcType="TIMESTAMP" property="issuedDate"/>
+        <result column="DISPLAY_NAME" jdbcType="VARCHAR" property="drawingCls"/>
+        <result column="ITEM_NO1" jdbcType="VARCHAR" property="itemNo1"/>
+        <result column="ITEM_NO2" jdbcType="VARCHAR" property="itemNo2"/>
+        <result column="ITEM_NO3" jdbcType="VARCHAR" property="itemNo3"/>
+        <result column="ITEM_NO4" jdbcType="VARCHAR" property="itemNo4"/>
+        <result column="ITEM_NO5" jdbcType="VARCHAR" property="itemNo5"/>
+        <result column="REFERENCE_DWG_NO" jdbcType="VARCHAR" property="referenceDwgNo"/>
+        <result column="PICKDATE" jdbcType="TIMESTAMP" property="tradingDate"/>
+        <result column="EXECUTE_REQ_CONTENTS" jdbcType="VARCHAR" property="regulationJun"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser"/>
+        <result column="REV_USER" jdbcType="VARCHAR" property="revUser"/>
+        <result column="CHECK_USER" jdbcType="VARCHAR" property="checkUser"/>
+    </resultMap>
+    
+    <select id="getSummary" parameterType="String" resultMap="SummaryResultMap">
+    <![CDATA[
+        SELECT
+            rev_write_page 
+            ,page_seq
+            ,rev_contents_summary
+        FROM
+            q10100tr_dwg_rev_smr
+        WHERE
+            drawing_no = #{drawingNo}
+        AND  
+            rev_no = #{revNo}
+        ORDER BY
+            rev_write_page  ASC
+            , page_seq  ASC
+            ,rev_contents_summary ASC
+    ]]>
+    </select>
+
+    <select id="getCommon" parameterType="String" resultMap="CommonResultMap">
+    <![CDATA[
+        SELECT
+            trdr.drawing_title
+            ,trpr.issued_date AS drawingdate
+            ,msc.display_name
+            ,trdr.item_no1
+            ,trdr.item_no2
+            ,trdr.item_no3
+            ,trdr.item_no4
+            ,trdr.item_no5
+            ,trdr.reference_dwg_no
+            ,trpr.issued_date AS pickdate
+            ,trdr.execute_req_contents
+            ,trdr.create_user
+            ,trdr.rev_user
+            ,trdr.check_user
+        FROM
+            q10090tr_dwg_rev trdr
+        LEFT OUTER JOIN 
+            a51001ms_cls msc  
+        ON 
+            trdr.drawing_cls = msc.cls_value 
+        AND 
+            msc.cls_id =  'DRAWING_CLS'
+        LEFT OUTER JOIN 
+            q10130tr_pdm_dstrbt_rlt trpr
+        ON
+            trdr.drawing_no = trpr.drawing_no
+        AND 
+            trdr.rev_no = trpr.rev_no
+        WHERE 
+            trdr.drawing_no = #{drawingNo}
+        AND 
+            trdr.rev_no = #{revNo}
+        ]]>
+    </select>
+</mapper>
